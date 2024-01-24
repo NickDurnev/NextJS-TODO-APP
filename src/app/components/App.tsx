@@ -5,13 +5,13 @@ import clsx from "clsx";
 import useLocalStorage from "../hooks/useLocalStorage";
 import useTheme from "../hooks/useTheme";
 import Loader from "./Loader";
-import Button from "./Button";
-import TODOForm from "./TODOForm";
+import EmptyState from "./EmptyState";
+import TODOList from "./TODOList";
+import AppBar from "./AppBar";
 
-const AppContainer = ({ children }: { children: React.ReactNode }) => {
+const App = () => {
   const [savedTheme, setSavedTheme] = useLocalStorage("theme");
   const { theme, set } = useTheme();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -27,20 +27,30 @@ const AppContainer = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
+  const mockTODO = [
+    {
+      id: "1",
+      title: "TODO 1",
+      description: "TODO 1 description",
+      status: "DONE",
+      priority: 1,
+      createdAt: new Date(),
+    },
+  ];
+
   return (
-    <div
+    <main
       className={clsx(
         "h-screen w-screen bg-skin-main",
         theme === "dark" ? "theme-dark" : ""
       )}
     >
-      <div className="flex justify-center py-8">
-        <Button onClick={() => setIsModalOpen(true)}>Add new task</Button>
+      <AppBar />
+      <div className="w-full flex justify-center top-20 sm:top-4 text-center">
+        {mockTODO.length > 0 ? <TODOList data={mockTODO} /> : <EmptyState />}
       </div>
-      <TODOForm onClose={() => setIsModalOpen(false)} isOpen={isModalOpen} />
-      {children}
-    </div>
+    </main>
   );
 };
 
-export default AppContainer;
+export default App;

@@ -2,7 +2,7 @@
 
 import { FC, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 
 import { TODOStatus } from "@prisma/client";
 import Button from "@/app/components/Button";
@@ -48,9 +48,6 @@ const TODOForm: FC<IProps> = ({ onClose, isOpen }) => {
     reset();
     onClose();
     setIsLoading(false);
-    if (isDirty) {
-      toast.success("Settings updated");
-    }
   };
 
   const handleCancel = () => {
@@ -80,7 +77,6 @@ const TODOForm: FC<IProps> = ({ onClose, isOpen }) => {
                 disabled={isLoading}
                 register={register}
                 errors={errors}
-                required
                 id="description"
                 label="Description"
                 maxLength={400}

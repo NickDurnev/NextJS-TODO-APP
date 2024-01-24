@@ -14,7 +14,8 @@ const TODOList: FC<IProps> = ({ data }) => {
   const [selectedTodo, setSelectedTodo] = useState<TODO | null>(null);
 
   const handleOpen = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
+    const target = e.target as HTMLElement;
+    if (target === e.currentTarget || target.nodeName === "H3") {
       const todoID = e.currentTarget.id;
 
       const todo = data.find((todo) => todo.id === todoID);
