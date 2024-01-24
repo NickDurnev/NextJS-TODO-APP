@@ -18,7 +18,10 @@ const TODOItem: FC<IProps> = ({ data, onClick }) => {
       onClick={onClick}
       className="flex justify-between items-center gap-4 p-2 sm:p-4 bg-skin-additional hover:bg-skin-hover rounded-md cursor-pointer transition"
     >
-      <IconButton onClick={() => console.log("delete")} isActive={status === TODOStatus.DONE}>
+      <IconButton
+        onClick={() => console.log("delete")}
+        isActive={status === TODOStatus.DONE}
+      >
         <FaCheck size={20} />
       </IconButton>
       <h3 className="text-skin-base truncate">{title}</h3>

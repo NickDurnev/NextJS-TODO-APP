@@ -1,6 +1,5 @@
-import Todo from "@prisma/client";
-
-export type PartialTodo = Pick<
-  Todo,
-  "title" | "description" | "priority" | "status"
->;
+export type Filters = {
+  status: string;
+  priority: number;
+  orderBy: string;
+};

@@ -3,6 +3,7 @@ import { NextApiRequest } from "next";
 
 import prisma from "@/app/libs/prismadb";
 import { errors } from "@/helpers/responseVariants";
+import { orderByKeys } from "@/app/constants";
 import { TODOStatus } from "@prisma/client";
 
 export async function GET(request: NextApiRequest) {
@@ -32,8 +33,7 @@ export async function GET(request: NextApiRequest) {
       );
     }
 
-    const validOrderByFields = ["createdAt", "status", "priority"];
-    const sanitizedOrderBy = validOrderByFields.includes(orderBy as string)
+    const sanitizedOrderBy = orderByKeys.includes(orderBy as string)
       ? orderBy
       : "createdAt";
 

@@ -33,7 +33,7 @@ const TODOForm: FC<IProps> = ({ onClose, isOpen }) => {
     defaultValues: {
       title: "",
       description: "",
-      status: { label: statusKeys[0], value: statusKeys[0] },
+      status: { label: statusKeys[0].label, value: statusKeys[0].value },
       priority: { label: priorityKeys[0], value: priorityKeys[0] },
     },
   });
@@ -97,9 +97,9 @@ const TODOForm: FC<IProps> = ({ onClose, isOpen }) => {
               <Select
                 disabled={isLoading}
                 label="Status"
-                options={statusKeys.map((status) => ({
-                  value: status,
-                  label: status,
+                options={statusKeys.map(({ label, value }) => ({
+                  value: value,
+                  label: label,
                 }))}
                 onChange={(value) =>
                   setValue("status", value, {

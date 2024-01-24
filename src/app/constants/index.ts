@@ -1,7 +1,17 @@
 import { TODOStatus } from "@prisma/client";
 
-const enumKeys = [TODOStatus.TO_DO, TODOStatus.DONE, TODOStatus.IN_PROGRESS];
+export const statusEnumKeys = [
+  TODOStatus.TO_DO,
+  TODOStatus.DONE,
+  TODOStatus.IN_PROGRESS,
+];
 
-export const statusKeys = enumKeys.map((status) => status.replace(/_/g, " "));
-export const orderByKeys = ["desc", "asc"];
-export const priorityKeys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+export const statusKeys = statusEnumKeys.map((status) => ({
+  value: status,
+  label: status.replace(/_/g, " "),
+}));
+
+export const orderByKeys = ["createdAt", "status", "priority"];
+export const orderTypeKeys = ["desc", "asc"];
+
+export const priorityKeys = Array.from({ length: 10 }, (_, index) => index + 1);
