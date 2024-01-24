@@ -10,9 +10,8 @@ interface IProps {
 export const TODOInfoList: FC<IProps> = ({ data }) => {
   const { id, title, description, status, priority, createdAt } = data;
 
-  const fieldsData = Object.entries({ status, priority });
-
-  // const formattedDate = format(new Date(createdAt), "PP");
+  const formattedDate = format(new Date(createdAt), "PP");
+  const fieldsData = Object.entries({ status, priority, createdA:formattedDate });
 
   return (
     <div className="relative mt-6 flex-1 px-4 sm:px-6 ">

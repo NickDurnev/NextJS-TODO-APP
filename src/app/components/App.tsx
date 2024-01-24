@@ -8,13 +8,13 @@ import Loader from "./Loader";
 import TODOList from "./TODOList";
 import AppBar from "./AppBar";
 import FiltersBar from "./FiltersBar";
-import { statusKeys, priorityKeys, orderByKeys } from "../constants";
+import { STATUS, PRIORITY, ORDER_BY } from "../constants";
 import { Todo } from "@prisma/client";
 
 const DEFAULT_FILTERS = {
-  status: statusKeys[0].value,
-  priority: priorityKeys[0],
-  orderBy: orderByKeys[0],
+  status: STATUS[0].value,
+  priority: PRIORITY[0],
+  orderBy: ORDER_BY[0],
 };
 
 const App = () => {
@@ -36,17 +36,6 @@ const App = () => {
       </div>
     );
   }
-
-  // const mockTODO = [
-  //   {
-  //     id: "1",
-  //     title: "TODO 1",
-  //     description: "TODO 1 description",
-  //     status: "DONE",
-  //     priority: 1,
-  //     createdAt: new Date(),
-  //   },
-  // ];
 
   return (
     <main

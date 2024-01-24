@@ -3,37 +3,25 @@ import { NextApiRequest } from "next";
 
 import prisma from "@/app/libs/prismadb";
 import { errors } from "@/helpers/responseVariants";
-import { orderByKeys } from "@/app/constants";
+import { ORDER_BY, ORDER_TYPE, PAGESIZE } from "@/app/constants";
 import { TODOStatus } from "@prisma/client";
 
-export async function GET(request: NextApiRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const {
-      page = 1,
-      pageSize = 10,
-      search = "",
-      orderBy,
-      orderType = "desc",
-      status = TODOStatus.TO_DO,
-    } = request.query;
+    const page = request.nextUrl.searchParams.get("page") ?? "1";
+    const pageSize = request.nextUrl.searchParams.get("pageSize") ?? "10";
+    const search = request.nextUrl.searchParams.get("search") ?? "";
+    const orderBy = request.nextUrl.searchParams.get("orderBy");
+    const orderType =
+      request.nextUrl.searchParams.get("orderType") ?? ORDER_TYPE[0];
+    const status =
+      request.nextUrl.searchParams.get("status") ?? TODOStatus.TO_DO;
 
     // Convert page and pageSize to numeric values
     const pageNumber = Number(page);
     const pageSizeNumber = Number(pageSize);
 
-    if (
-      isNaN(pageNumber) ||
-      isNaN(pageSizeNumber) ||
-      pageNumber <= 0 ||
-      pageSizeNumber <= 0
-    ) {
-      return new NextResponse(
-        errors.INVALID_PARAMS.message,
-        errors.INVALID_PARAMS.status
-      );
-    }
-
-    const sanitizedOrderBy = orderByKeys.includes(orderBy as string)
+    const sanitizedOrderBy = ORDER_BY.includes(orderBy as string)
       ? orderBy
       : "createdAt";
 

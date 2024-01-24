@@ -18,10 +18,6 @@ const TODOList: FC<IProps> = ({ filters }) => {
   const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
   const { data, loading } = useGetTodos(filters);
 
-  console.log(data);
-
-  // const updateTodos = (data: Todo[]) => setTodos((prev) => [...prev, ...data]);
-
   const handleOpen = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
     if (target === e.currentTarget || target.nodeName === "H3") {
@@ -38,15 +34,15 @@ const TODOList: FC<IProps> = ({ filters }) => {
 
   return (
     <div className="w-full flex justify-center top-20 sm:top-4 text-center">
-      {0 === 0 ? (
+      {!data.length ? (
         <EmptyState />
       ) : (
         <>
-          <div className="w-full flex justify-center xs:px-[10vw] sm:px-[30vw] sm:top-4 text-center">
+          <ul className="w-full flex flex-col justify-center gap-6 xs:px-[10vw] sm:px-[20vw] md:px-[35vw] sm:top-4 text-center">
             {data.map((todo) => (
               <TODOItem key={todo.id} data={todo} onClick={handleOpen} />
             ))}
-          </div>
+          </ul>
           <SideModal
             data={selectedTodo ?? data[0]}
             isOpen={isInfoOpened}

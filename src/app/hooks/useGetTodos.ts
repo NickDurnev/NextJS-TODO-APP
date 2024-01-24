@@ -1,34 +1,29 @@
 import { useEffect, useState } from "react";
 import axios from "@/app/libs/axios";
 import { TODOStatus } from "@prisma/client";
-
-interface IParams {
-  page?: number;
-  pageSize?: number;
-  search?: string;
-  orderBy?: string;
-  orderType?: "asc" | "desc";
-  status?: TODOStatus;
-}
+import { ORDER_BY, ORDER_TYPE, PAGESIZE } from "@/app/constants";
+import { Params } from "@/app/types";
 
 const useGetTodos = ({
   page = 1,
-  pageSize = 10,
+  pageSize = PAGESIZE,
   search = "",
-  orderBy,
-  orderType = "desc",
+  orderBy = ORDER_BY[0],
+  orderType = ORDER_TYPE[0],
   status = TODOStatus.TO_DO,
-}: IParams) => {
-  const [data, setData] = useState({});
+}: Params) => {
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data: response } = await axios.get(
+        const {
+          data: { todos },
+        } = await axios.get(
           `todos?page=${page}&pageSize=${pageSize}&search=${search}&orderBy=${orderBy}&orderType=${orderType}&status=${status}`
         );
-        setData(response);
+        setData((prev) => [...prev, ...todos]);
       } catch (error) {
         console.error(error);
       }

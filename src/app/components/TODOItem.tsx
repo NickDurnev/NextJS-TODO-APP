@@ -13,7 +13,7 @@ const TODOItem: FC<IProps> = ({ data, onClick }) => {
   const { title, id, status } = data;
 
   return (
-    <div
+    <li
       id={id}
       onClick={onClick}
       className="flex justify-between items-center gap-4 p-2 sm:p-4 bg-skin-additional hover:bg-skin-hover rounded-md cursor-pointer transition"
@@ -28,7 +28,7 @@ const TODOItem: FC<IProps> = ({ data, onClick }) => {
       <IconButton onClick={() => console.log("delete")}>
         <IoTrash size={20} />
       </IconButton>
-    </div>
+    </li>
   );
 };
 

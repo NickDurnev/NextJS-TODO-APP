@@ -4,7 +4,7 @@ import { FC, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import axios from "@/app/libs/axios";
-import { priorityKeys, statusKeys } from "@/app/constants";
+import { PRIORITY, STATUS } from "@/app/constants";
 import useToast from "@/app/hooks/useToast";
 import Button from "@/app/components/Button";
 import Select from "@/app/components/inputs/Select";
@@ -33,8 +33,8 @@ const TODOForm: FC<IProps> = ({ onClose, isOpen }) => {
     defaultValues: {
       title: "",
       description: "",
-      status: { label: statusKeys[0].label, value: statusKeys[0].value },
-      priority: { label: priorityKeys[0], value: priorityKeys[0] },
+      status: { label: STATUS[0].label, value: STATUS[0].value },
+      priority: { label: PRIORITY[0], value: PRIORITY[0] },
     },
   });
 
@@ -97,7 +97,7 @@ const TODOForm: FC<IProps> = ({ onClose, isOpen }) => {
               <Select
                 disabled={isLoading}
                 label="Status"
-                options={statusKeys.map(({ label, value }) => ({
+                options={STATUS.map(({ label, value }) => ({
                   value: value,
                   label: label,
                 }))}
@@ -111,7 +111,7 @@ const TODOForm: FC<IProps> = ({ onClose, isOpen }) => {
               <Select
                 disabled={isLoading}
                 label="Priority"
-                options={priorityKeys.map((priority) => ({
+                options={PRIORITY.map((priority) => ({
                   value: priority,
                   label: priority,
                 }))}

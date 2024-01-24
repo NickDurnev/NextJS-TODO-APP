@@ -3,12 +3,7 @@
 import { FC, useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
-import {
-  statusKeys,
-  priorityKeys,
-  orderByKeys,
-  orderTypeKeys,
-} from "../constants";
+import { STATUS, PRIORITY, ORDER_BY, ORDER_TYPE } from "../constants";
 import { Filters } from "../types";
 import Select from "./inputs/Select";
 import IconButton from "./IconButton";
@@ -21,10 +16,10 @@ interface IProps {
 const FiltersBar: FC<IProps> = ({ isLoading, setFilters }) => {
   const { handleSubmit, setValue, watch } = useForm<FieldValues>({
     defaultValues: {
-      status: { label: statusKeys[0].label, value: statusKeys[0].value },
-      priority: { label: priorityKeys[0], value: priorityKeys[0] },
-      orderBy: { label: orderByKeys[0], value: orderByKeys[0] },
-      orderType: orderTypeKeys[0],
+      status: { label: STATUS[0].label, value: STATUS[0].value },
+      priority: { label: PRIORITY[0], value: PRIORITY[0] },
+      orderBy: { label: ORDER_BY[0], value: ORDER_BY[0] },
+      orderType: ORDER_TYPE[0],
     },
   });
 
@@ -54,19 +49,19 @@ const FiltersBar: FC<IProps> = ({ isLoading, setFilters }) => {
   };
 
   const changeOrderType = (e, id) => {
-    return id === "desc"
-      ? setValue("orderType", "asc", { shouldValidate: true })
-      : setValue("orderType", "desc", { shouldValidate: true });
+    return id === ORDER_TYPE[0]
+      ? setValue("orderType", ORDER_TYPE[1], { shouldValidate: true })
+      : setValue("orderType", ORDER_TYPE[0], { shouldValidate: true });
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <ul className="flex align-center w-full sm:w-[500px] mx-auto justify-between p-4 border-[1px] border-skin-main rounded-md">
-        <li className="min-w-[160px] text-center">
+        <li key="status" className="min-w-[160px] text-center">
           <p className="text-skin-base text-sm">Status:</p>
           <Select
             disabled={isLoading}
-            options={statusKeys.map(({ label, value }) => ({
+            options={STATUS.map(({ label, value }) => ({
               value: value,
               label: label,
             }))}
@@ -78,11 +73,11 @@ const FiltersBar: FC<IProps> = ({ isLoading, setFilters }) => {
             value={status}
           />
         </li>
-        <li className="text-center">
+        <li key="priority" className="text-center">
           <p className="text-skin-base text-sm">Priority:</p>
           <Select
             disabled={isLoading}
-            options={priorityKeys.map((priority) => ({
+            options={PRIORITY.map((priority) => ({
               value: priority,
               label: priority,
             }))}
@@ -94,11 +89,11 @@ const FiltersBar: FC<IProps> = ({ isLoading, setFilters }) => {
             value={priority}
           />
         </li>
-        <li className="min-w-[160px] text-center">
+        <li key="orderBy" className="min-w-[160px] text-center">
           <p className="text-skin-base text-sm">Order by:</p>
           <Select
             disabled={isLoading}
-            options={orderByKeys.map((orderBy) => ({
+            options={ORDER_BY.map((orderBy) => ({
               value: orderBy,
               label: orderBy,
             }))}
@@ -110,13 +105,13 @@ const FiltersBar: FC<IProps> = ({ isLoading, setFilters }) => {
             value={orderBy}
           />
         </li>
-        <li className="pt-6">
+        <li key="orderType" className="pt-6">
           <IconButton
             disabled={isLoading}
             onClick={(e, id) => changeOrderType(e, id)}
             id={orderType}
           >
-            {orderType === "desc" ? (
+            {orderType === ORDER_TYPE[0] ? (
               <FaArrowDown size={20} />
             ) : (
               <FaArrowUp size={20} />
