@@ -14,9 +14,9 @@ const Search: FC<IProps> = ({ addStyles }) => {
             placeholder="Search"
             className={clsx(
                 `
+            w-80
             form-input
             block 
-            w-full 
             rounded-md 
             border-0 
             py-1.5 

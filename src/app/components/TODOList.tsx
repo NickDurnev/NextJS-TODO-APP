@@ -1,17 +1,19 @@
 "use client";
 
 import { FC, useState } from "react";
-import { TODO } from "@prisma/client";
+import { Todo } from "@prisma/client";
 import TODOItem from "./TODOItem";
 import SideModal from "./SideModal";
+import useGetTodos from "../hooks/useGetTodos";
 
 interface IProps {
-  data: TODO[];
+  data: Todo[];
 }
 
 const TODOList: FC<IProps> = ({ data }) => {
   const [isInfoOpened, setIsInfoOpened] = useState(false);
-  const [selectedTodo, setSelectedTodo] = useState<TODO | null>(null);
+  const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
+  // const { data, loading } = useGetTodos();
 
   const handleOpen = (e: React.MouseEvent) => {
     const target = e.target as HTMLElement;

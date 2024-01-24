@@ -8,10 +8,12 @@ const AppBar = () => {
 
     return (
         <div className="flex flex-col gap-6 py-8">
-            <Search addStyles="w-80 mx-auto" />
-            <Button onClick={() => setIsModalOpen(true)} addStyles="w-40 mx-auto">Add new task</Button>
+            <Search addStyles="mx-auto" />
+            <Button onClick={() => setIsModalOpen(true)} addStyles="w-40 mx-auto">
+                Add new task
+            </Button>
             <TODOForm onClose={() => setIsModalOpen(false)} isOpen={isModalOpen} />
-        </div >
+        </div>
     );
 };
 

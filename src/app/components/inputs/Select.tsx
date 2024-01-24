@@ -6,7 +6,7 @@ import { FieldErrors } from "react-hook-form";
 import ReactSelect, { ActionMeta, MultiValue, SingleValue } from "react-select";
 
 interface SelectProps {
-    label: string;
+    label?: string;
     value?: Record<string, any>;
     errors?: FieldErrors;
     id?: string;
@@ -35,9 +35,11 @@ const Select: FC<SelectProps> = ({
 
     return (
         <div className="z-[100]">
-            <label className="block text-sm font-medium leading-6 text-skin-additional">
-                {label}
-            </label>
+            {label && (
+                <label className="block text-sm font-medium leading-6 text-skin-additional">
+                    {label}
+                </label>
+            )}
             <div className="mt-2 capitalize">
                 <ReactSelect
                     isDisabled={disabled}

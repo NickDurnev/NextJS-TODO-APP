@@ -8,6 +8,7 @@ import Loader from "./Loader";
 import EmptyState from "./EmptyState";
 import TODOList from "./TODOList";
 import AppBar from "./AppBar";
+import FiltersBar from "./FiltersBar";
 
 const App = () => {
   const [savedTheme, setSavedTheme] = useLocalStorage("theme");
@@ -46,6 +47,7 @@ const App = () => {
       )}
     >
       <AppBar />
+      <FiltersBar />
       <div className="w-full flex justify-center top-20 sm:top-4 text-center">
         {mockTODO.length > 0 ? <TODOList data={mockTODO} /> : <EmptyState />}
       </div>

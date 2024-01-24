@@ -63,7 +63,7 @@ li {
 .dot-spinner {
   --uib-size: 2.8rem;
   --uib-speed: 0.9s;
-  --uib-color: #183153;
+  --uib-color: #7086a6;
   position: relative;
   display: flex;
   align-items: center;

@@ -3,14 +3,14 @@
 import { FC, Fragment } from "react";
 import clsx from "clsx";
 import { IoClose } from "react-icons/io5";
-import { TODO } from "@prisma/client";
+import { Todo } from "@prisma/client";
 import { Dialog, Transition } from "@headlessui/react";
 import { TODOInfoList } from "./TODOInfo";
 
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
-  data: TODO | null;
+  data: Todo | null;
   theme?: string;
 }
 

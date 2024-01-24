@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { format } from "date-fns";
-import { TODO } from "@prisma/client";
+import { Todo } from "@prisma/client";
 import TODOInfoItem from "./TODOInfoItem";
 
 interface IProps {
-  data: TODO;
+  data: Todo;
 }
 
 export const TODOInfoList: FC<IProps> = ({ data }) => {

@@ -1,5 +1,5 @@
 export const errors = {
-  INVALID_DATA: { message: "Invalid data", status: { status: 400 } },
+  INVALID_PARAMS: { message: "Invalid parameters", status: { status: 400 } },
   INVALID_ID: { message: "Invalid ID", status: { status: 400 } },
   MISSING_INFO: { message: "Missing info", status: { status: 400 } },
   UNAUTHORIZED: { message: "Unauthorized", status: { status: 401 } },
