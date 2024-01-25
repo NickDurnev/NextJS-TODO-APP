@@ -1,6 +1,5 @@
 "use client";
 
-import useTheme from "@/app/hooks/useTheme";
 import { FC } from "react";
 import { FieldErrors } from "react-hook-form";
 import ReactSelect, { ActionMeta, MultiValue, SingleValue } from "react-select";
@@ -31,8 +30,6 @@ const Select: FC<SelectProps> = ({
   disabled,
   isMulti = false,
 }) => {
-  const { theme } = useTheme();
-
   return (
     <div className="z-[100]">
       {label && (
@@ -47,7 +44,7 @@ const Select: FC<SelectProps> = ({
           onChange={onChange}
           isMulti={isMulti}
           options={options}
-          menuPortalTarget={document.body}
+          menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
           styles={{
             menuPortal: (base: object) => ({
               ...base,
@@ -56,30 +53,30 @@ const Select: FC<SelectProps> = ({
             }),
             control: (base: object) => ({
               ...base,
-              background: theme === "dark" ? "#2c2a2a" : "#ffffff",
-              borderColor: theme === "dark" ? "#605f5e" : "#1a191b",
+              background: "#2c2a2a",
+              borderColor: "#605f5e",
             }),
             menuList: (base: object) => ({
               ...base,
-              background: theme === "dark" ? "#2c2a2a" : "#ffffff",
+              background: "#2c2a2a",
             }),
             option: (base: object) => ({
               ...base,
-              background: theme === "dark" ? "#2c2a2a" : "#ffffff",
-              color: theme === "dark" ? "#605f5e" : "#262323",
+              background: "#2c2a2a",
+              color: "#605f5e",
               "&:hover": {
-                color: theme === "dark" ? "#d4d6dd" : "#a7a5a5",
+                color: "#d4d6dd",
               },
             }),
             multiValueLabel: (base: object) => ({
               ...base,
-              color: theme === "dark" ? "#605f5e" : "#262323",
+              color: "#605f5e",
             }),
             dropdownIndicator: (base: object) => ({
               ...base,
-              color: theme === "dark" ? "#605f5e" : "#262323",
+              color: "#605f5e",
               "&:hover": {
-                color: theme === "dark" ? "#d4d6dd" : "#a7a5a5",
+                color: "#d4d6dd",
               },
             }),
             indicatorSeparator: (base: object) => ({
@@ -88,11 +85,11 @@ const Select: FC<SelectProps> = ({
             }),
             group: (base: object) => ({
               ...base,
-              color: theme === "dark" ? "#605f5e" : "#262323",
+              color: "#605f5e",
             }),
             singleValue: (base: object) => ({
               ...base,
-              color: theme === "dark" ? "#605f5e" : "#262323",
+              color: "#605f5e",
             }),
           }}
           classNames={{

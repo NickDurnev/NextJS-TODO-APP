@@ -5,7 +5,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import axios from "@/app/libs/axios";
 import { PRIORITY, STATUS } from "@/app/constants";
-import useToast from "@/app/hooks/useToast";
+import getToast from "@/app/libs/toast";
 import Button from "@/app/components/Button";
 import Select from "@/app/components/inputs/Select";
 import Input from "@/app/components/inputs/Input";
@@ -19,8 +19,6 @@ interface IProps {
 
 const TODOForm: FC<IProps> = ({ onClose, isOpen }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  useToast(error);
 
   const {
     formState: { errors },
@@ -57,7 +55,7 @@ const TODOForm: FC<IProps> = ({ onClose, isOpen }) => {
         onClose();
       })
       .catch((error) => {
-        setError(error);
+        getToast(error);
       })
       .finally(() => setIsLoading(false));
   };

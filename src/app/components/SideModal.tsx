@@ -1,7 +1,6 @@
 "use client";
 
 import { FC, Fragment } from "react";
-import clsx from "clsx";
 import { IoClose } from "react-icons/io5";
 import { Todo } from "@prisma/client";
 import { Dialog, Transition } from "@headlessui/react";
@@ -11,10 +10,12 @@ interface IProps {
   isOpen: boolean;
   onClose: () => void;
   data: Todo | null;
-  theme?: string;
 }
 
-const SideModal: FC<IProps> = ({ isOpen, onClose, data, theme = "dark" }) => {
+const SideModal: FC<IProps> = ({ isOpen, onClose, data }) => {
+  if (!data) {
+    return "";
+  }
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -41,12 +42,7 @@ const SideModal: FC<IProps> = ({ isOpen, onClose, data, theme = "dark" }) => {
                 leaveTo="translate-x-full"
               >
                 <Dialog.Panel className="pointer-events-auto w-screen max-w-md">
-                  <div
-                    className={clsx(
-                      "flex h-full flex-col overflow-y-scroll bg-skin-main py-6 shadow-xl",
-                      theme === "dark" ? "theme-dark" : ""
-                    )}
-                  >
+                  <div className="flex h-full flex-col overflow-y-scroll bg-skin-main py-6 shadow-xl theme-dark">
                     <div className="px-4 sm:px-6">
                       <div className="flex items-start justify-end">
                         <div className="ml-3 flex h-7 items-center">

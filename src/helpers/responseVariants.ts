@@ -1,9 +1,0 @@
-export const errors = {
-  INVALID_PARAMS: { message: "Invalid parameters", status: { status: 400 } },
-  INVALID_ID: { message: "Invalid ID", status: { status: 400 } },
-  MISSING_INFO: { message: "Missing info", status: { status: 400 } },
-  UNAUTHORIZED: { message: "Unauthorized", status: { status: 401 } },
-  USER_NOT_FOUND: { message: "User not found", status: { status: 404 } },
-  INTERNAL_ERROR: { message: "Internal Error", status: { status: 500 } },
-  USER_EXIST: { message: "Email already in use", status: { status: 409 } },
-};

@@ -3,17 +3,18 @@ import clsx from "clsx";
 import { DebounceInput } from "react-debounce-input";
 
 interface IProps {
-    addStyles?: string;
+  setSearch: (search: string) => void;
+  addStyles?: string;
 }
 
-const Search: FC<IProps> = ({ addStyles }) => {
-    return (
-        <DebounceInput
-            debounceTimeout={300}
-            onChange={(e) => console.log(e.target.value)}
-            placeholder="Search"
-            className={clsx(
-                `
+const Search: FC<IProps> = ({ setSearch, addStyles }) => {
+  return (
+    <DebounceInput
+      debounceTimeout={300}
+      onChange={(e) => setSearch(e.target.value.trim())}
+      placeholder="Search"
+      className={clsx(
+        `
             w-80
             form-input
             block 
@@ -32,10 +33,10 @@ const Search: FC<IProps> = ({ addStyles }) => {
             sm:text-sm 
             sm:leading-6
             resize-none`,
-                addStyles
-            )}
-        />
-    );
+        addStyles
+      )}
+    />
+  );
 };
 
 export default Search;

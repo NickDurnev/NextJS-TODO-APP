@@ -4,26 +4,6 @@
 
 @layer base {
   :root {
-    --color-text-base: #262323;
-    --color-text-additional: #969595;
-    --color-text-additional-hover: #6a6969;
-    --color-text-mutated: #6d86ea;
-    --color-text-mutated-hover: #3a51ab;
-    --color-text-active: #2cb149;
-    --color-text-inverted: #4f46e5;
-    --color-bg-main: #ffffff;
-    --color-bg-additional: #e4e4e6;
-    --color-bg-hover: #9ba2b4;
-    --color-bg-active: #97bc9b;
-    --color-bg-accent: #305aadd4;
-    --color-bg-accent-hover: #305aad;
-    --color-text-button: #ffffff;
-    --color-border-main: #1a191b;
-    --color-danger: #d62f1c;
-    --color-danger-hover: #b42a1b;
-  }
-
-  .theme-dark {
     --color-text-base: #c0b9b9;
     --color-text-additional: #c4c2c2;
     --color-text-additional-hover: #969595;

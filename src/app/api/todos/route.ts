@@ -1,26 +1,25 @@
-import { NextResponse } from "next/server";
-import { NextApiRequest } from "next";
+import { NextResponse, NextRequest } from "next/server";
 
 import prisma from "@/app/libs/prismadb";
-import { errors } from "@/helpers/responseVariants";
-import { ORDER_BY, ORDER_TYPE, PAGESIZE } from "@/app/constants";
 import { TODOStatus } from "@prisma/client";
+import { errors } from "@/app/constants";
+import { ORDER_BY, ORDER_TYPE, PAGESIZE, FILTER } from "@/app/constants";
 
 export async function GET(request: NextRequest) {
   try {
     const page = request.nextUrl.searchParams.get("page") ?? "1";
-    const pageSize = request.nextUrl.searchParams.get("pageSize") ?? "10";
+    const pageSize =
+      request.nextUrl.searchParams.get("pageSize") ?? `${PAGESIZE}`;
     const search = request.nextUrl.searchParams.get("search") ?? "";
     const orderBy = request.nextUrl.searchParams.get("orderBy");
     const orderType =
       request.nextUrl.searchParams.get("orderType") ?? ORDER_TYPE[0];
-    const status =
-      request.nextUrl.searchParams.get("status") ?? TODOStatus.TO_DO;
+    const status = request.nextUrl.searchParams.get("status");
 
-    // Convert page and pageSize to numeric values
     const pageNumber = Number(page);
     const pageSizeNumber = Number(pageSize);
 
+    const sanitizedStatus = status === FILTER[0].value ? null : status;
     const sanitizedOrderBy = ORDER_BY.includes(orderBy as string)
       ? orderBy
       : "createdAt";
@@ -33,7 +32,7 @@ export async function GET(request: NextRequest) {
           { title: { contains: search as string, mode: "insensitive" } },
           { description: { contains: search as string, mode: "insensitive" } },
         ],
-        status: status as TODOStatus,
+        ...(sanitizedStatus ? { status: sanitizedStatus as TODOStatus } : {}),
       },
       skip,
       take: pageSizeNumber,
@@ -42,11 +41,22 @@ export async function GET(request: NextRequest) {
       },
     });
 
-    const totalTodos = await prisma.todo.count();
+    const totalTodos = await prisma.todo.count({
+      where: {
+        OR: [
+          { title: { contains: search as string, mode: "insensitive" } },
+          { description: { contains: search as string, mode: "insensitive" } },
+        ],
+        ...(sanitizedStatus ? { status: sanitizedStatus as TODOStatus } : {}),
+      },
+    });
+
+    const isLastPage = pageNumber * pageSizeNumber > totalTodos;
 
     return NextResponse.json({
       todos,
       totalTodos,
+      isLastPage,
     });
   } catch (error: any) {
     console.error(error, "ERROR_MESSAGES");

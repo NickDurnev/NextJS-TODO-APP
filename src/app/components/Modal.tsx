@@ -2,9 +2,7 @@
 
 import { Dialog, Transition } from "@headlessui/react";
 import { FC, Fragment } from "react";
-import clsx from "clsx";
 import { IoClose } from "react-icons/io5";
-import useTheme from "@/app/hooks/useTheme";
 
 interface ModalProps {
   isOpen?: boolean;
@@ -13,7 +11,6 @@ interface ModalProps {
 }
 
 const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
-  const { theme } = useTheme();
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -28,12 +25,7 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
         >
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </Transition.Child>
-        <div
-          className={clsx(
-            "fixed inset-0 z-10 overflow-y-auto",
-            theme === "dark" ? "theme-dark" : ""
-          )}
-        >
+        <div className="fixed inset-0 z-10 overflow-y-auto theme-dark">
           <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
             <Transition.Child
               as={Fragment}

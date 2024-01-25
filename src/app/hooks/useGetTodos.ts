@@ -1,8 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "@/app/libs/axios";
-import { TODOStatus } from "@prisma/client";
+import { Todo } from "@prisma/client";
 import { ORDER_BY, ORDER_TYPE, PAGESIZE } from "@/app/constants";
-import { Params } from "@/app/types";
+import getToast from "@/app/libs/toast";
+
+interface Params {
+  page?: number;
+  pageSize?: number;
+  search?: string;
+  orderBy?: string;
+  orderType?: string;
+  status?: string;
+}
 
 const useGetTodos = ({
   page = 1,
@@ -10,31 +19,49 @@ const useGetTodos = ({
   search = "",
   orderBy = ORDER_BY[0],
   orderType = ORDER_TYPE[0],
-  status = TODOStatus.TO_DO,
+  status,
 }: Params) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Todo[]>([]);
   const [loading, setLoading] = useState(true);
+  const pageRef = useRef(1);
+  const isLastPageRef = useRef(false);
 
   useEffect(() => {
+    if (isLastPageRef.current && pageRef.current > 1) {
+      console.log("Last");
+      return;
+    }
     const fetchData = async () => {
       try {
         const {
-          data: { todos },
+          data: { todos, isLastPage },
         } = await axios.get(
           `todos?page=${page}&pageSize=${pageSize}&search=${search}&orderBy=${orderBy}&orderType=${orderType}&status=${status}`
         );
+
+        if (isLastPage) {
+          isLastPageRef.current = isLastPage;
+        }
+
+        if (pageRef.current === page) {
+          setData(todos);
+          return;
+        }
         setData((prev) => [...prev, ...todos]);
-      } catch (error) {
-        console.error(error);
+      } catch (error: any) {
+        getToast(error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchData();
+    pageRef.current = page;
   }, [orderBy, orderType, page, pageSize, search, status]);
 
   return {
     data,
+    setData,
     loading,
   };
 };
