@@ -54,10 +54,7 @@ const TODOList: FC<IProps> = ({
     axios
       .patch(`/todos/${id}`, data)
       .then(({ data }) => {
-        setData((prev) => [
-          ...prev.filter((todo) => todo.id !== data.id),
-          data,
-        ]);
+        setMutation(data);
       })
       .catch((error) => {
         getToast(error);

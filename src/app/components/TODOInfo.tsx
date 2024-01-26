@@ -50,7 +50,6 @@ const TODOInfo: FC<IProps> = ({ data, setMutation, onClose }) => {
       description,
     };
 
-
     setIsLoading(true);
     axios
       .patch(`/todos/${id}`, data)
@@ -63,11 +62,6 @@ const TODOInfo: FC<IProps> = ({ data, setMutation, onClose }) => {
       })
       .finally(() => setIsLoading(false));
   };
-
-  useEffect(() => {
-    () => handleSubmit(onSubmit)();
-  }, [handleSubmit, onClose, onSubmit]);
-
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

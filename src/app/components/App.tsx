@@ -13,15 +13,25 @@ const DEFAULT_FILTERS = {
 };
 
 const App = () => {
-  const [filters, setFilters] = useState(DEFAULT_FILTERS);
+  const [filters, setFilters] = useState<{ status: string; orderBy: string }>(
+    DEFAULT_FILTERS
+  );
   const [search, setSearch] = useState("");
   const [mutation, setMutation] = useState(null);
 
   return (
-    <main className="h-screen w-screen flex flex-col gap-6 bg-skin-main py-8">
-      <AppBar setSearch={(search) => setSearch(search)} setMutation={setMutation} />
+    <main className="w-full h-full min-h-screen flex flex-col gap-6 bg-skin-main py-8">
+      <AppBar
+        setSearch={(search) => setSearch(search)}
+        setMutation={setMutation}
+      />
       <FiltersBar setFilters={(filters) => setFilters(filters)} />
-      <TODOList filters={filters} search={search} mutation={mutation} setMutation={setMutation} />
+      <TODOList
+        filters={filters}
+        search={search}
+        mutation={mutation}
+        setMutation={setMutation}
+      />
     </main>
   );
 };
