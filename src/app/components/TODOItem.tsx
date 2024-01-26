@@ -44,11 +44,13 @@ const TODOItem: FC<IProps> = ({
         >
           <FaCheck size={20} />
         </IconButton>
-        <h3
-          className={clsx("text-skin-base truncate", isDone && "line-through")}
-        >
-          {title}
-        </h3>
+        <div className="max-w-[60%]">
+          <h3
+            className={clsx("text-skin-base truncate", isDone && "line-through")}
+          >
+            {title}
+          </h3>
+        </div>
         <IconButton onClick={() => handleDelete(id)}>
           <IoTrash size={20} />
         </IconButton>
