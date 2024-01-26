@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import axios from "@/app/libs/axios";
+import { useEffect, useState } from "react";
 import { Todo } from "@prisma/client";
-import { ORDER_BY, ORDER_TYPE, PAGESIZE } from "@/app/constants";
+
+import axios from "@/app/libs/axios";
 import getToast from "@/app/libs/toast";
+import { ORDER_BY, ORDER_TYPE } from "@/app/constants";
 
 interface Params {
-  page?: number;
-  pageSize?: number;
   search?: string;
   orderBy?: string;
   orderType?: string;
@@ -15,8 +14,6 @@ interface Params {
 }
 
 const useGetTodos = ({
-  page = 1,
-  pageSize = PAGESIZE,
   search = "",
   orderBy = ORDER_BY[0],
   orderType = ORDER_TYPE[0],
@@ -25,31 +22,17 @@ const useGetTodos = ({
 }: Params) => {
   const [data, setData] = useState<Todo[]>([]);
   const [loading, setLoading] = useState(true);
-  const pageRef = useRef(1);
-  const isLastPageRef = useRef(false);
 
   useEffect(() => {
-    if (isLastPageRef.current && pageRef.current > 1) {
-      console.log("Last");
-      return;
-    }
     const fetchData = async () => {
       try {
         const {
-          data: { todos, isLastPage },
+          data: { todos },
         } = await axios.get(
-          `todos?page=${page}&pageSize=${pageSize}&search=${search}&orderBy=${orderBy}&orderType=${orderType}&status=${status}`
+          `todos?search=${search}&orderBy=${orderBy}&orderType=${orderType}&status=${status}`
         );
 
-        if (isLastPage) {
-          isLastPageRef.current = isLastPage;
-        }
-
-        if (pageRef.current === page) {
-          setData(todos);
-          return;
-        }
-        setData((prev) => [...prev, ...todos]);
+        setData(todos);
       } catch (error: any) {
         getToast(error);
       } finally {
@@ -58,8 +41,7 @@ const useGetTodos = ({
     };
 
     fetchData();
-    pageRef.current = page;
-  }, [orderBy, orderType, page, pageSize, search, status, mutation]);
+  }, [orderBy, orderType, search, status, mutation]);
 
   return {
     data,

@@ -6,11 +6,12 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import axios from "@/app/libs/axios";
 import { PRIORITY, STATUS } from "@/app/constants";
 import getToast from "@/app/libs/toast";
+
 import Button from "@/app/components/buttons/Button";
 import Select from "@/app/components/inputs/Select";
 import Input from "@/app/components/inputs/Input";
-import Modal from "./Modal";
-import Loader from "./Loader";
+import Modal from "@/app/components/Modal";
+import Loader from "@/app/components/Loader";
 
 interface IProps {
   onClose: () => void;
@@ -22,7 +23,7 @@ const TODOForm: FC<IProps> = ({ onClose, isOpen, setMutation }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const {
-    formState: { errors },
+    formState: { errors, isDirty },
     register,
     handleSubmit,
     setValue,
@@ -52,6 +53,10 @@ const TODOForm: FC<IProps> = ({ onClose, isOpen, setMutation }) => {
       title,
       description,
     };
+
+    if (!isDirty) {
+      return;
+    }
 
     setIsLoading(true);
     axios

@@ -1,9 +1,10 @@
 "use client";
 
-import { FC, Fragment } from "react";
+import { FC, Fragment, useRef } from "react";
 import { IoClose } from "react-icons/io5";
-import { Todo } from "@prisma/client";
 import { Dialog, Transition } from "@headlessui/react";
+import { Todo } from "@prisma/client";
+
 import TODOInfo from "./TODOInfo";
 
 interface IProps {
@@ -14,13 +15,19 @@ interface IProps {
 }
 
 const SideModal: FC<IProps> = ({ isOpen, onClose, data, setMutation }) => {
+  const submitRef = useRef<HTMLButtonElement>();
   if (!data) {
     return "";
   }
 
+  const handleCLose = () => {
+    submitRef?.current?.click()!;
+    onClose();
+  };
+
   return (
     <Transition.Root show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={onClose}>
+      <Dialog as="div" className="relative z-50" onClose={handleCLose}>
         <Transition.Child
           as={Fragment}
           enter="ease=out duration-500"
@@ -49,7 +56,7 @@ const SideModal: FC<IProps> = ({ isOpen, onClose, data, setMutation }) => {
                       <div className="flex items-start justify-end">
                         <div className="ml-3 flex h-7 items-center">
                           <button
-                            onClick={onClose}
+                            onClick={handleCLose}
                             type="button"
                             className="rounded-xl bg-skin-main text-skin-additional hover:text-skin-additional-hover focus:outline-none"
                           >
@@ -59,7 +66,11 @@ const SideModal: FC<IProps> = ({ isOpen, onClose, data, setMutation }) => {
                         </div>
                       </div>
                     </div>
-                    <TODOInfo data={data} setMutation={setMutation} onClose={onClose} />
+                    <TODOInfo
+                      data={data}
+                      submitRef={submitRef}
+                      setMutation={setMutation}
+                    />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

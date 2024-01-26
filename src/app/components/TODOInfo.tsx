@@ -1,26 +1,28 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { format } from "date-fns";
+
 import { Todo } from "@prisma/client";
 import axios from "../libs/axios";
 import getToast from "../libs/toast";
 import { PRIORITY, STATUS } from "@/app/constants";
+
 import Select from "@/app/components/inputs/Select";
 import Input from "@/app/components/inputs/Input";
 
 interface IProps {
   data: Todo;
+  submitRef: any;
   setMutation: (data: any) => void;
-  onClose: () => void;
 }
 
-const TODOInfo: FC<IProps> = ({ data, setMutation, onClose }) => {
+const TODOInfo: FC<IProps> = ({ data, submitRef, setMutation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { id, title, description, status, priority, createdAt } = data;
   const formattedDate = format(new Date(createdAt), "PP");
 
   const {
-    formState: { errors },
+    formState: { errors, isDirty },
     register,
     handleSubmit,
     setValue,
@@ -29,8 +31,8 @@ const TODOInfo: FC<IProps> = ({ data, setMutation, onClose }) => {
     defaultValues: {
       title,
       description,
-      status: { label: STATUS[0].label, value: status },
-      priority: { label: PRIORITY[0], value: priority },
+      status: { label: status.replace(/_/g, " "), value: status },
+      priority: { label: priority, value: priority },
     },
   });
 
@@ -43,24 +45,28 @@ const TODOInfo: FC<IProps> = ({ data, setMutation, onClose }) => {
     status,
     priority,
   }) => {
-    const data = {
+    const formData = {
       status: status?.value,
       priority: priority?.value,
       title,
       description,
     };
 
-    setIsLoading(true);
-    axios
-      .patch(`/todos/${id}`, data)
-      .then(() => {
-        onClose();
-        setMutation(data);
-      })
-      .catch((error) => {
-        getToast(error);
-      })
-      .finally(() => setIsLoading(false));
+    const isDirtyStatus = status?.value !== data.status;
+    const isDirtyPriority = priority?.value !== data.priority;
+
+    if (isDirty || isDirtyStatus || isDirtyPriority) {
+      setIsLoading(true);
+      axios
+        .patch(`/todos/${id}`, formData)
+        .then(() => {
+          setMutation(data);
+        })
+        .catch((error) => {
+          getToast(error);
+        })
+        .finally(() => setIsLoading(false));
+    }
   };
 
   return (
@@ -84,13 +90,14 @@ const TODOInfo: FC<IProps> = ({ data, setMutation, onClose }) => {
             maxLength={400}
             addSTyles="pb-14 text-skin-additional ring-1 focus:ring-0"
           />
-          <div className="flex-col justify-start px-4 gap-4">
+          <div className="flex-col justify-start px-4 gap-8">
             <div className="flex justify-left align-center p-2">
               <p className="text-sm w-20 pt-4 font-medium text-skin-additional capitalize">
                 Status:
               </p>
               <Select
                 disabled={isLoading}
+                id="status"
                 options={STATUS.map(({ label, value }) => ({
                   value: value,
                   label: label,
@@ -121,7 +128,7 @@ const TODOInfo: FC<IProps> = ({ data, setMutation, onClose }) => {
                 value={priorityValue}
               />
             </div>
-            <div className="flex justify-left align-center p-2 border-b-[1px]">
+            <div className="flex justify-left align-center p-2">
               <p className="text-sm w-20 font-medium text-skin-additional capitalize">
                 createdAt:
               </p>
@@ -132,6 +139,7 @@ const TODOInfo: FC<IProps> = ({ data, setMutation, onClose }) => {
           </div>
         </div>
       </div>
+      <button ref={submitRef} type="submit" className="hidden" />
     </form>
   );
 };

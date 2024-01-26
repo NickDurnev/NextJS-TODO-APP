@@ -44,7 +44,9 @@ const Select: FC<SelectProps> = ({
           onChange={onChange}
           isMulti={isMulti}
           options={options}
-          menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+          menuPortalTarget={
+            typeof document !== "undefined" ? document.body : null
+          }
           styles={{
             menuPortal: (base: object) => ({
               ...base,

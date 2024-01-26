@@ -18,20 +18,13 @@ interface IProps {
   setMutation: (mutation: any) => void;
 }
 
-const TODOList: FC<IProps> = ({
-  filters,
-  search,
-  mutation,
-  setMutation,
-}) => {
+const TODOList: FC<IProps> = ({ filters, search, mutation, setMutation }) => {
   const { data, setData, loading } = useGetTodos({
     ...filters,
     search,
     mutation,
   });
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log('RENDER');
 
   const handleDelete = (id: string) => {
     setIsLoading(true);
