@@ -1,14 +1,12 @@
-# Connectify
+# TODO App
 
-Connectify is a web application built with Next.js, Prisma, Pusher and other
-technologies. It allows users to chat with each other, create group chats, send images and emojis, edit and delete messages. You can sign up using credentials with email verification or just using Google or Github authentication.
+TODO App is a web application built with Next.js, Prisma and other
+technologies. It allows users to add, edit, sort TODOs for managing your daily life.
 
 ## Features
 
-- Sign up using Google and GitHub providers
-- User session updates using JWT tokens
-- Real time communication
-- Light and dark modes
+- Saving todos in DB
+- CRUD operations
 - Responsive design
 
 ## Technologies Used
@@ -17,16 +15,7 @@ technologies. It allows users to chat with each other, create group chats, send 
 - Typescript
 - Tailwind
 - Prisma
-- Pusher
-- NextAuth
-- Cloudinary
-- Zustand
-- Nodemailer
 - Axios
-- Framer Motion
-- Spline
-- YUP
-- Nanoid
 - Date-fns
 - React hook form
 - React select
