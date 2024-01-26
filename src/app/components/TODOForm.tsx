@@ -6,7 +6,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import axios from "@/app/libs/axios";
 import { PRIORITY, STATUS } from "@/app/constants";
 import getToast from "@/app/libs/toast";
-import Button from "@/app/components/Button";
+import Button from "@/app/components/buttons/Button";
 import Select from "@/app/components/inputs/Select";
 import Input from "@/app/components/inputs/Input";
 import Modal from "./Modal";
@@ -15,9 +15,10 @@ import Loader from "./Loader";
 interface IProps {
   onClose: () => void;
   isOpen: boolean;
+  setMutation: (data: any) => void;
 }
 
-const TODOForm: FC<IProps> = ({ onClose, isOpen }) => {
+const TODOForm: FC<IProps> = ({ onClose, isOpen, setMutation }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -39,20 +40,26 @@ const TODOForm: FC<IProps> = ({ onClose, isOpen }) => {
   const status = watch("status");
   const priority = watch("priority");
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    const { title, description, status, priority } = data;
+  const onSubmit: SubmitHandler<FieldValues> = ({
+    title,
+    description,
+    status,
+    priority,
+  }) => {
+    const data = {
+      status: status?.value,
+      priority: priority?.value,
+      title,
+      description,
+    };
 
     setIsLoading(true);
     axios
-      .post("/todos", {
-        status: status?.value,
-        priority: priority?.value,
-        title,
-        description,
-      })
+      .post("/todos", data)
       .then(() => {
         reset();
         onClose();
+        setMutation(data);
       })
       .catch((error) => {
         getToast(error);

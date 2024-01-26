@@ -15,16 +15,13 @@ const DEFAULT_FILTERS = {
 const App = () => {
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
   const [search, setSearch] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [mutation, setMutation] = useState(null);
 
   return (
     <main className="h-screen w-screen flex flex-col gap-6 bg-skin-main py-8">
-      <AppBar setSearch={(search) => setSearch(search)} />
-      <FiltersBar
-        isLoading={isLoading}
-        setFilters={(filters) => setFilters(filters)}
-      />
-      <TODOList filters={filters} search={search} />
+      <AppBar setSearch={(search) => setSearch(search)} setMutation={setMutation} />
+      <FiltersBar setFilters={(filters) => setFilters(filters)} />
+      <TODOList filters={filters} search={search} mutation={mutation} setMutation={setMutation} />
     </main>
   );
 };

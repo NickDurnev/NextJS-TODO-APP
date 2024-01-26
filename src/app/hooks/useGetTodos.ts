@@ -11,6 +11,7 @@ interface Params {
   orderBy?: string;
   orderType?: string;
   status?: string;
+  mutation: any;
 }
 
 const useGetTodos = ({
@@ -20,6 +21,7 @@ const useGetTodos = ({
   orderBy = ORDER_BY[0],
   orderType = ORDER_TYPE[0],
   status,
+  mutation,
 }: Params) => {
   const [data, setData] = useState<Todo[]>([]);
   const [loading, setLoading] = useState(true);
@@ -57,7 +59,7 @@ const useGetTodos = ({
 
     fetchData();
     pageRef.current = page;
-  }, [orderBy, orderType, page, pageSize, search, status]);
+  }, [orderBy, orderType, page, pageSize, search, status, mutation]);
 
   return {
     data,

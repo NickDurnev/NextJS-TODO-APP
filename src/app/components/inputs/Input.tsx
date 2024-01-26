@@ -4,13 +4,14 @@ import { FC } from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 interface InputProps {
-  label: string;
+  label?: string;
   id: string;
   required?: boolean;
   register: UseFormRegister<FieldValues>;
   maxLength: number;
   errors: FieldErrors;
   disabled?: boolean;
+  addSTyles?: string;
 }
 
 const Input: FC<InputProps> = ({
@@ -21,6 +22,7 @@ const Input: FC<InputProps> = ({
   maxLength,
   errors,
   disabled,
+  addSTyles
 }) => {
   return (
     <div>
@@ -59,7 +61,8 @@ const Input: FC<InputProps> = ({
             sm:leading-6
             resize-none`,
               errors[id] ? "focus:ring-rose-500" : "focus:ring-sky-600",
-              disabled && "opacity-50 cursor-default"
+              disabled && "opacity-50 cursor-default",
+              addSTyles
             )}
           />{" "}
         </div>

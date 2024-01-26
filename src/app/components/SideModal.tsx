@@ -4,18 +4,20 @@ import { FC, Fragment } from "react";
 import { IoClose } from "react-icons/io5";
 import { Todo } from "@prisma/client";
 import { Dialog, Transition } from "@headlessui/react";
-import { TODOInfoList } from "./TODOInfo";
+import TODOInfo from "./TODOInfo";
 
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
   data: Todo | null;
+  setMutation: (data: any) => void;
 }
 
-const SideModal: FC<IProps> = ({ isOpen, onClose, data }) => {
+const SideModal: FC<IProps> = ({ isOpen, onClose, data, setMutation }) => {
   if (!data) {
     return "";
   }
+
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-50" onClose={onClose}>
@@ -57,7 +59,7 @@ const SideModal: FC<IProps> = ({ isOpen, onClose, data }) => {
                         </div>
                       </div>
                     </div>
-                    <TODOInfoList data={data} />
+                    <TODOInfo data={data} setMutation={setMutation} onClose={onClose} />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

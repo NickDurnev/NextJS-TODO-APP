@@ -2,21 +2,13 @@ import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 
 import { errors } from "@/app/constants";
+import { Todo } from "@prisma/client";
 
 interface IParams {
   todoId: string;
 }
 
-// interface IArguments {
-//   id: string;
-//   lastMessageId: string | null;
-//   users: PartialUser[];
-//   messageId?: string;
-//   currentUserId?: string;
-// }
-
 async function handler(request: Request, { params }: { params: IParams }) {
-  console.log("REQUEST", request);
   try {
     const { todoId } = params;
 
@@ -39,15 +31,12 @@ async function handler(request: Request, { params }: { params: IParams }) {
       });
     }
 
-    // if (request.method === "PATCH") {
-    //   return await PATCH(request, {
-    //     id,
-    //     lastMessageId,
-    //     users,
-    //     messageId,
-    //     currentUserId: currentUser.id,
-    //   });
-    // }
+    if (request.method === "PATCH") {
+      return await PATCH(request, {
+        todoId,
+        existingTodo,
+      });
+    }
   } catch (error) {
     console.log(error, "ERROR_MESSAGE_DELETE");
     return new NextResponse(
@@ -67,38 +56,28 @@ async function DELETE(request: Request, { todoId }: { todoId: string }) {
   return NextResponse.json(deletedTodo);
 }
 
-// async function PATCH(
-//   request: Request,
-//   { id, messageId, currentUserId }: IArguments
-// ) {
-//   const body = await request.json();
-//   const { message, image } = body;
+async function PATCH(
+  request: Request,
+  { todoId, existingTodo }: { todoId: string; existingTodo: Todo }
+) {
+  const body = await request.json();
+  const { createdAt, title, description, status, priority } = existingTodo;
 
-//   const updatedMessage = await prisma.message.update({
-//     where: {
-//       id: messageId,
-//     },
-//     include: {
-//       sender: {
-//         ...UserSelector,
-//       },
-//       seen: {
-//         ...UserSelector,
-//       },
-//     },
-//     data: {
-//       body: message,
-//       image: image,
-//       editedAt: new Date().toISOString(),
-//       seen: {
-//         connect: {
-//           id: currentUserId,
-//         },
-//       },
-//     },
-//   });
+  const updatedTodo = await prisma.todo.update({
+    where: {
+      id: todoId,
+    },
+    data: {
+      createdAt,
+      title,
+      description,
+      status,
+      priority,
+      ...body,
+    },
+  });
 
-//   return NextResponse.json(updatedMessage);
-// }
+  return NextResponse.json(updatedTodo);
+}
 
 export { handler as PATCH, handler as DELETE };

@@ -1,6 +1,5 @@
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
-import { useEffect } from "react";
 
 const getToast = (error: AxiosError | null) => {
   const responseData = error?.response?.data;

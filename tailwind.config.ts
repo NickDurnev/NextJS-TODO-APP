@@ -24,7 +24,7 @@ const config: Config = {
           main: "var(--color-bg-main)",
           additional: "var(--color-bg-additional)",
           hover: "var(--color-bg-hover)",
-          active: "var(--color-bg-active)",
+          done: "var(--color-bg-done)",
           danger: "var(--color-danger)",
           "danger-hover": "var(--color-danger-hover)",
           "bg-accent": "var(--color-bg-accent)",

@@ -14,11 +14,24 @@ interface IProps {
     orderBy: string;
   };
   search: string;
+  mutation: any;
+  setMutation: (mutation: any) => void;
 }
 
-const TODOList: FC<IProps> = ({ filters, search }) => {
-  const { data, setData, loading } = useGetTodos({ ...filters, search });
+const TODOList: FC<IProps> = ({
+  filters,
+  search,
+  mutation,
+  setMutation,
+}) => {
+  const { data, setData, loading } = useGetTodos({
+    ...filters,
+    search,
+    mutation,
+  });
   const [isLoading, setIsLoading] = useState(false);
+
+  console.log('RENDER');
 
   const handleDelete = (id: string) => {
     setIsLoading(true);
@@ -26,6 +39,25 @@ const TODOList: FC<IProps> = ({ filters, search }) => {
       .delete(`/todos/${id}`)
       .then(({ data }) => {
         setData((prev) => prev.filter((todo) => todo.id !== data.id));
+      })
+      .catch((error) => {
+        getToast(error);
+      })
+      .finally(() => setIsLoading(false));
+  };
+
+  const handleUpdate = (
+    id: string,
+    data: { [key: string]: string | number }
+  ) => {
+    setIsLoading(true);
+    axios
+      .patch(`/todos/${id}`, data)
+      .then(({ data }) => {
+        setData((prev) => [
+          ...prev.filter((todo) => todo.id !== data.id),
+          data,
+        ]);
       })
       .catch((error) => {
         getToast(error);
@@ -48,6 +80,8 @@ const TODOList: FC<IProps> = ({ filters, search }) => {
               key={todo.id}
               data={todo}
               handleDelete={(id) => handleDelete(id)}
+              handleUpdate={(id, data) => handleUpdate(id, data)}
+              setMutation={(data) => setMutation(data)}
             />
           ))}
         </ul>

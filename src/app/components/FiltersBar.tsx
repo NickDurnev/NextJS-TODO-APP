@@ -5,17 +5,13 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { FILTER, ORDER_BY, ORDER_TYPE } from "../constants";
 import Select from "./inputs/Select";
-import IconButton from "./IconButton";
+import IconButton from "./buttons/IconButton";
 
 interface IProps {
-  isLoading: boolean;
-  setFilters: (filters: {
-    status: string;
-    orderBy: string;
-  }) => void;
+  setFilters: (filters: { status: string; orderBy: string }) => void;
 }
 
-const FiltersBar: FC<IProps> = ({ isLoading, setFilters }) => {
+const FiltersBar: FC<IProps> = ({ setFilters }) => {
   const { handleSubmit, setValue, watch } = useForm<FieldValues>({
     defaultValues: {
       status: { label: FILTER[0].label, value: FILTER[0].value },
@@ -60,7 +56,6 @@ const FiltersBar: FC<IProps> = ({ isLoading, setFilters }) => {
       <div key="status" className="min-w-[120px] md:min-w-[160px] text-center">
         <p className="text-skin-base text-sm">Status:</p>
         <Select
-          disabled={isLoading}
           options={FILTER.map(({ label, value }) => ({
             value: value,
             label: label,
@@ -76,7 +71,6 @@ const FiltersBar: FC<IProps> = ({ isLoading, setFilters }) => {
       <div key="orderBy" className="min-w-[120px] md:min-w-[160px] text-center">
         <p className="text-skin-base text-sm">Order by:</p>
         <Select
-          disabled={isLoading}
           options={ORDER_BY.map((orderBy) => ({
             value: orderBy,
             label: orderBy,
