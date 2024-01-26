@@ -20,6 +20,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ToasterContext />
+        {children}
         <App />
       </body>
     </html>
