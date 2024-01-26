@@ -2,11 +2,13 @@
 
 import { FC, useState } from "react";
 import axios from "@/app/libs/axios";
+
 import getToast from "@/app/libs/toast";
-import useGetTodos from "../hooks/useGetTodos";
-import TODOItem from "./TODOItem";
-import EmptyState from "./EmptyState";
-import Loader from "./Loader";
+import useGetTodos from "@/app/hooks/useGetTodos";
+
+import TODOItem from "@/app/components/TODOItem";
+import EmptyState from "@/app/components/EmptyState";
+import Loader from "@/app/components/Loader";
 
 interface IProps {
   filters: {

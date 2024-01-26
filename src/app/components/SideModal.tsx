@@ -3,9 +3,9 @@
 import { FC, Fragment, useRef } from "react";
 import { IoClose } from "react-icons/io5";
 import { Dialog, Transition } from "@headlessui/react";
-import { Todo } from "@prisma/client";
 
-import TODOInfo from "./TODOInfo";
+import { Todo } from "@prisma/client";
+import TODOInfo from "@/app/components/TODOInfo";
 
 interface IProps {
   isOpen: boolean;

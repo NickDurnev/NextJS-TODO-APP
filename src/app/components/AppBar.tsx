@@ -1,7 +1,8 @@
 import { FC, useState } from "react";
-import Button from "./buttons/Button";
-import TODOForm from "./TODOForm";
-import Search from "./Search";
+
+import Button from "@/app/components/buttons/Button";
+import TODOForm from "@/app/components/TODOForm";
+import Search from "@/app/components/Search";
 
 interface IProps {
     setSearch: (search: string) => void;
@@ -17,7 +18,11 @@ const AppBar: FC<IProps> = ({ setSearch, setMutation }) => {
             <Button onClick={() => setIsModalOpen(true)} addStyles="w-40 mx-auto">
                 Add new task
             </Button>
-            <TODOForm onClose={() => setIsModalOpen(false)} isOpen={isModalOpen} setMutation={setMutation} />
+            <TODOForm
+                onClose={() => setIsModalOpen(false)}
+                isOpen={isModalOpen}
+                setMutation={setMutation}
+            />
         </div>
     );
 };

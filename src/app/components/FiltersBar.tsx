@@ -3,9 +3,10 @@
 import { FC, useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
-import { FILTER, ORDER_BY, ORDER_TYPE } from "../constants";
-import Select from "./inputs/Select";
-import IconButton from "./buttons/IconButton";
+
+import { FILTER, ORDER_BY, ORDER_TYPE } from "@/app/constants";
+import Select from "@/app/components/inputs/Select";
+import IconButton from "@/app/components/buttons/IconButton";
 
 interface IProps {
   setFilters: (filters: { status: string; orderBy: string }) => void;
@@ -23,6 +24,7 @@ const FiltersBar: FC<IProps> = ({ setFilters }) => {
   useEffect(() => {
     const subscription = watch(() => handleSubmit(onSubmit)());
     return () => subscription.unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleSubmit, watch]);
 
   const status = watch("status");

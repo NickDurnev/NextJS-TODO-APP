@@ -3,7 +3,6 @@
 import { Toaster } from "react-hot-toast";
 
 const ToasterContext = () => {
-
     const baseStyles = {
         background: "#4240402a",
         color: "#c0b9b9",

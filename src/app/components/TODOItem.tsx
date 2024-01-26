@@ -2,9 +2,10 @@ import { FC, useState } from "react";
 import clsx from "clsx";
 import { IoTrash } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa";
+
 import { Todo, TODOStatus } from "@prisma/client";
-import IconButton from "./buttons/IconButton";
-import SideModal from "./SideModal";
+import IconButton from "@/app/components/buttons/IconButton";
+import SideModal from "@/app/components/SideModal";
 
 interface IProps {
   data: Todo;
@@ -13,7 +14,12 @@ interface IProps {
   setMutation: (data: any) => void;
 }
 
-const TODOItem: FC<IProps> = ({ data, handleDelete, handleUpdate, setMutation }) => {
+const TODOItem: FC<IProps> = ({
+  data,
+  handleDelete,
+  handleUpdate,
+  setMutation,
+}) => {
   const [isInfoOpened, setIsInfoOpened] = useState(false);
   const { title, id, status } = data;
   const isDone = status === TODOStatus.DONE;

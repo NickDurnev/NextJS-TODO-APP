@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import TODOList from "./TODOList";
-import AppBar from "./AppBar";
-import FiltersBar from "./FiltersBar";
-import { FILTER, PRIORITY, ORDER_BY } from "../constants";
+import { FILTER, PRIORITY, ORDER_BY } from "@/app/constants";
+
+import TODOList from "@/app/components/TODOList";
+import AppBar from "@/app/components/AppBar";
+import FiltersBar from "@/app/components/FiltersBar";
 
 const DEFAULT_FILTERS = {
   status: FILTER[0].value,

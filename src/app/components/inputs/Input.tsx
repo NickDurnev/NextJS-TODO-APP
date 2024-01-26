@@ -23,7 +23,7 @@ const Input: FC<InputProps> = ({
   maxLength,
   errors,
   disabled,
-  addSTyles
+  addSTyles,
 }) => {
   return (
     <div>
